@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale.Category;
 
+import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -19,6 +20,7 @@ import com.mitocode.model.repository.ISpecialtyRepository;
  * @author BRYAN
  *
  */
+@Named
 public class SpecialtyRepositoryImpl implements ISpecialtyRepository, Serializable{
 
 	private static final long serialVersionUID = 1L;
