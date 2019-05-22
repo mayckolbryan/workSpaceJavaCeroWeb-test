@@ -14,43 +14,42 @@
 				<p:growl id="men" />
 				<p:toolbar>
 					<f:facet name="right">
-						
 							
 						<p:commandButton value="Guardar" icon="ui-icon-disk"
-							process="@this :frm:panGriCategory"
-							actionListener="#{categoryController.saveCategory()}"
-							update=":frm:men :frm:datTabCategory :frm:panGriCategory" />
+							process="@this :frm:panGriSpecialty"
+							actionListener="#{specialtyController.saveSpecialty()}"
+							update=":frm:men :frm:datTabSpecialty :frm:panGriSpecialty" />
 							
 							
 						<p:commandButton value="Editar" icon="ui-icon-pencil"
 							process="@this"
-							actionListener="#{categoryController.editCategory()}"
-							update=":frm:men :frm:panGriCategory" />
+							actionListener="#{specialtyController.editCategory()}"
+							update=":frm:men :frm:panGriSpecialty" />
 					</f:facet>
 				</p:toolbar>
-				<p:panelGrid id="panGriCategory" columns="2" style="width:100%">
+				<p:panelGrid id="panGriSpecialty" columns="2" style="width:100%">
 					<p:outputLabel value="Nombre:" for="txtName" />
 					<p:inputText id="txtName" required="true" maxlength="45"
-						value="#{categoryController.category.name}" />
+						value="#{specialtyController.specialty.name}" />
 				</p:panelGrid>
 				<br></br>
 
-				<p:dataTable id="datTabCategory"
-					emptyMessage="No existen categorias registrados"
-					value="#{categoryController.categorys}" var="category"
+				<p:dataTable id="datTabSpecialty"
+					emptyMessage="No existen especialidades registradas"
+					value="#{specialtyController.specialties}" var="specialty"
 					paginator="true" rows="10" selectionMode="single"
-					rowKey="#{category.id}">
+					rowKey="#{specialty.id}">
 					<f:facet name="header">
-						<p:outputLabel value="Lista de Categorias" />
+						<p:outputLabel value="Lista de Especialidades" />
 					</f:facet>
 					<p:ajax event="rowSelect"
-						listener="#{categoryController.selectCategory}" />
+						listener="#{specialtyController.selectCategory}" />
 
 					<p:column headerText="Id">
-						<p:outputLabel value="#{category.id}" />
+						<p:outputLabel value="#{specialty.id}" />
 					</p:column>
 					<p:column headerText="Nombre">
-						<p:outputLabel value="#{category.name}" />
+						<p:outputLabel value="#{specialty.name}" />
 					</p:column>
 				</p:dataTable>
 			</h:form>

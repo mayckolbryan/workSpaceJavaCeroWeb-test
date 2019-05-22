@@ -5,8 +5,7 @@
     <artifactId>visorapp</artifactId>
     <version>1</version>
   </parent>
-  <artifactId>visorcore</artifactId>
-  
+  <artifactId>visorcore</artifactId>  
   <packaging>jar</packaging>
 	
   <dependencies>
