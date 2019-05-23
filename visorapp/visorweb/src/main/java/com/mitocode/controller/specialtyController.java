@@ -45,11 +45,11 @@ public class specialtyController implements Serializable{
 		try {
 			this.specialties = specialtyService.findAll();
 		} catch (Exception e) {
-			Message.messageError("Error Category :" + e.getMessage());
+			Message.messageError("Error Specialty :" + e.getMessage());
 		}
 	}
 
-	public void saveCategory() {
+	public void saveSpecialty() {
 		try {
 			if (specialty.getId() != null) {
 
@@ -63,11 +63,11 @@ public class specialtyController implements Serializable{
 			loadSpecialties();
 			clearForm();
 		} catch (Exception e) {
-			Message.messageError("Error Category :" + e.getStackTrace());
+			Message.messageError("Error Specialty :" + e.getStackTrace());
 		}
 	}
 
-	public void editCategory() {
+	public void editSpecialty() {
 		try {
 			if (this.specialtySelec != null) {
 				this.specialty = specialtySelec;
@@ -75,12 +75,12 @@ public class specialtyController implements Serializable{
 				Message.messageInfo("Debe seleccionar una especialidad");
 			}
 		} catch (Exception e) {
-			Message.messageError("Error Especialidad :" + e.getMessage());
+			Message.messageError("Error Specialty :" + e.getMessage());
 		}
 
 	}
 
-	public void selectCategory(SelectEvent e) {
+	public void selectSpecialty(SelectEvent e) {
 		this.specialtySelec = (Specialty) e.getObject();
 	}
 

@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head>
+<body>
+
+	<ui:composition template="/WEB-INF/templates/master.xhtml">
+		<ui:define name="content">
+			<h:form id="frm">
+				<p:growl id="men" />
+				<p:toolbar>
+					<f:facet name="right">
+							
+						<p:commandButton value="Guardar" icon="ui-icon-disk"
+							process="@this :frm:panGriPatient"
+							actionListener="#{patientController.savePatient()}"
+							update=":frm:men :frm:datTabPatient :frm:panGriPatient" />
+							
+							
+						<p:commandButton value="Editar" icon="ui-icon-pencil"
+							process="@this"
+							actionListener="#{patientController.editPatient()}"
+							update=":frm:men :frm:panGriPatient" />
+					</f:facet>
+				</p:toolbar>
+				<p:panelGrid id="panGriPatient" columns="2" style="width:100%">
+					<p:outputLabel value="Nombres:" for="txtFirstName" />
+					<p:inputText id="txtFirstName" required="true" maxlength="45"
+						value="#{patientController.patient.firstName}" />
+					<p:outputLabel value="Apellidos:" for="txtLastName" />
+					<p:inputText id="txtLastName" required="true" maxlength="45"
+						value="#{patientController.patient.lastName}" />
+					<p:outputLabel value="DNI:" for="txtDni" />
+					<p:inputText id="txtDni" required="true" maxlength="45"
+						value="#{patientController.patient.dni}" />
+					<p:outputLabel value="Número de Historial Clínico:" for="txtNumberClinicalHistory" />
+					<p:inputText id="txtNumberClinicalHistory" required="true" maxlength="45"
+						value="#{patientController.patient.numberClinicalHistory}" />
+				</p:panelGrid>
+				<br></br>
+
+				<p:dataTable id="datTabPatient"
+					emptyMessage="No existen pacientes registrados"
+					value="#{patientController.patients}" var="patient"
+					paginator="true" rows="10" selectionMode="single"
+					rowKey="#{patient.id}">
+					<f:facet name="header">
+						<p:outputLabel value="Lista de Pacientes" />
+					</f:facet>
+					<p:ajax event="rowSelect"
+						listener="#{patientController.selectPatient}" />
+
+					<p:column headerText="Id">
+						<p:outputLabel value="#{patient.id}" />
+					</p:column>
+					<p:column headerText="Nombres">
+						<p:outputLabel value="#{patient.firstName}" />
+					</p:column>
+					<p:column headerText="Apellidos">
+						<p:outputLabel value="#{patient.lastName}" />
+					</p:column>
+					<p:column headerText="DNI">
+						<p:outputLabel value="#{patient.dni}" />
+					</p:column>
+					<p:column headerText="Número de Historial Clínico">
+						<p:outputLabel value="#{patient.numberClinicalHistory}" />
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+
+</body>
+</html>

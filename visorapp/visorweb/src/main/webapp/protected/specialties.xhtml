@@ -23,7 +23,7 @@
 							
 						<p:commandButton value="Editar" icon="ui-icon-pencil"
 							process="@this"
-							actionListener="#{specialtyController.editCategory()}"
+							actionListener="#{specialtyController.editSpecialty()}"
 							update=":frm:men :frm:panGriSpecialty" />
 					</f:facet>
 				</p:toolbar>
@@ -43,7 +43,7 @@
 						<p:outputLabel value="Lista de Especialidades" />
 					</f:facet>
 					<p:ajax event="rowSelect"
-						listener="#{specialtyController.selectCategory}" />
+						listener="#{specialtyController.selectSpecialty}" />
 
 					<p:column headerText="Id">
 						<p:outputLabel value="#{specialty.id}" />
