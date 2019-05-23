@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head>
+<body>
+
+	<ui:composition template="/WEB-INF/templates/master.xhtml">
+		<ui:define name="content">
+			<h:form id="frm">
+				<p:growl id="men" />
+				<p:toolbar>
+					<f:facet name="right">
+							
+						<p:commandButton value="Guardar" icon="ui-icon-disk"
+							process="@this :frm:panGriDoctor"
+							actionListener="#{doctorController.saveDoctor()}"
+							update=":frm:men :frm:datTabDoctor :frm:panGriDoctor" />
+							
+							
+						<p:commandButton value="Editar" icon="ui-icon-pencil"
+							process="@this"
+							actionListener="#{doctorController.editDoctor()}"
+							update=":frm:men :frm:panGriDoctor" />
+					</f:facet>
+				</p:toolbar>
+				<p:panelGrid id="panGriDoctor" columns="2" style="width:100%">
+					<p:outputLabel value="Nombres:" for="txtFirstName" />
+					<p:inputText id="txtFirstName" required="true" maxlength="45"
+						value="#{doctorController.doctor.firstName}" />
+					<p:outputLabel value="Apellidos:" for="txtLastName" />
+					<p:inputText id="txtLastName" required="true" maxlength="45"
+						value="#{doctorController.doctor.lastName}" />
+					<p:outputLabel value="DNI:" for="txtDni" />
+					<p:inputText id="txtDni" required="true" maxlength="45"
+						value="#{doctorController.doctor.dni}" />
+					<p:outputLabel value="Número de Colegiatura:" for="txtCmp" />
+					<p:inputText id="txtCmp" required="true" maxlength="45"
+						value="#{doctorController.doctor.cmp}" />
+					<p:outputLabel value="Especialidad" for="cmbSpecialty" />
+					<p:selectOneMenu id="cmbSpecialty" required="true" effect="drop"
+						value="#{doctorController.specialty}"
+						converter="omnifaces.SelectItemsConverter">
+						<f:selectItem itemLabel="Seleccione una opción"
+							noSelectionOption="true" itemValue="" />
+						<f:selectItems value="#{doctorController.specialties}" var="Espec"
+							itemLabel="#{Espec.name}" itemValue="#{Espec}" />
+					</p:selectOneMenu>
+				</p:panelGrid>
+				<br></br>
+
+				<p:dataTable id="datTabDoctor"
+					emptyMessage="No existen doctores registrados"
+					value="#{doctorController.doctors}" var="doctor"
+					paginator="true" rows="10" selectionMode="single"
+					rowKey="#{doctor.id}">
+					<f:facet name="header">
+						<p:outputLabel value="Lista de Doctores" />
+					</f:facet>
+					<p:ajax event="rowSelect"
+						listener="#{doctorController.selectDoctor}" />
+
+					<p:column headerText="Id">
+						<p:outputLabel value="#{doctor.id}" />
+					</p:column>
+					<p:column headerText="Nombres">
+						<p:outputLabel value="#{doctor.firstName}" />
+					</p:column>
+					<p:column headerText="Apellidos">
+						<p:outputLabel value="#{doctor.lastName}" />
+					</p:column>
+					<p:column headerText="DNI">
+						<p:outputLabel value="#{doctor.dni}" />
+					</p:column>
+					<p:column headerText="Número de Colegiatura">
+						<p:outputLabel value="#{doctor.cmp}" />
+					</p:column>
+					<p:column headerText="Especialidad">
+						<p:outputLabel value="#{doctor.specialty.name}" />
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+
+</body>
+</html>
