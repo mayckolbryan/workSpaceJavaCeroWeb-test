@@ -26,6 +26,10 @@
 							actionListener="#{patientController.editPatient()}"
 							update=":frm:men :frm:panGriPatient" />
 					</f:facet>
+					
+					<f:facet name="left">
+						<p:outputLabel value="Pacientes" />
+					</f:facet>
 				</p:toolbar>
 				<p:panelGrid id="panGriPatient" columns="2" style="width:100%">
 					<p:outputLabel value="Nombres:" for="txtFirstName" />

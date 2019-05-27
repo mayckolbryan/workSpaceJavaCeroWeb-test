@@ -5,6 +5,7 @@ package com.mitocode.service.impl;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Optional;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -52,6 +53,11 @@ public class PatientServiceImpl implements IPatientService, Serializable{
 	@Override
 	public Patient findById(Patient t) throws Exception {
 		return patientRepository.findById(t);
+	}
+
+	@Override
+	public Optional<Patient> findPatientByDni(String dni) throws Exception {
+		return patientRepository.findByDni(dni);
 	}
 
 }

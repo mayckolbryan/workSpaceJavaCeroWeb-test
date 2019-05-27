@@ -3,6 +3,8 @@
  */
 package com.mitocode.service;
 
+import java.util.Optional;
+
 import com.mitocode.model.entity.Patient;
 
 /**
@@ -10,5 +12,7 @@ import com.mitocode.model.entity.Patient;
  *
  */
 public interface IPatientService extends CrudService<Patient>{
+
+	Optional<Patient> findPatientByDni(String dni) throws Exception;
 
 }

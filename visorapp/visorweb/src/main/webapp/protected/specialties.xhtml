@@ -26,6 +26,10 @@
 							actionListener="#{specialtyController.editSpecialty()}"
 							update=":frm:men :frm:panGriSpecialty" />
 					</f:facet>
+					
+					<f:facet name="left">
+						<p:outputLabel value="Especialidades" />
+					</f:facet>
 				</p:toolbar>
 				<p:panelGrid id="panGriSpecialty" columns="2" style="width:100%">
 					<p:outputLabel value="Nombre:" for="txtName" />

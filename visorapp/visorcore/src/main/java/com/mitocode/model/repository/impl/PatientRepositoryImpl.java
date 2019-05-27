@@ -6,6 +6,7 @@ package com.mitocode.model.repository.impl;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.inject.Named;
 import javax.persistence.EntityManager;
@@ -64,6 +65,17 @@ public class PatientRepositoryImpl implements IPatientRepository, Serializable{
 		patients = query.getResultList();
 
 		return patients != null && !patients.isEmpty() ? patients.get(0) : new Patient();
+	}
+
+	@Override
+	public Optional<Patient> findByDni(String dni) throws Exception {
+		Patient patient;
+		TypedQuery<Patient> patientFound = em.createQuery("Select p from Patient p  WHERE p.dni =?1",
+				Patient.class);
+		patientFound.setParameter(1, dni);
+		patient = patientFound.getSingleResult();
+
+		return Optional.of(patient);
 	}
 
 }

@@ -26,7 +26,7 @@ import javax.persistence.TemporalType;
  *
  */
 @Entity
-@Table(name="medicals_consultations")
+@Table(name="medical_consultations")
 public class MedicalConsultation implements Serializable{
 
 	private static final long serialVersionUID = 1L;

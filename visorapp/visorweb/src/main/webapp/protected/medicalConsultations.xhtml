@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head>
+<body>
+
+	<ui:composition template="/WEB-INF/templates/master.xhtml">
+		<ui:define name="content">
+			<h:form id="frm">
+				<p:growl id="men" />
+				<p:toolbar>
+					<f:facet name="right">
+							
+						<p:commandButton value="Guardar" icon="ui-icon-disk"
+							process="@this :frm:panGriMedicalConsultation"
+							actionListener="#{medicalConsultationController.saveMedicalConsultation()}"
+							update=":frm:men :frm:panGriMedicalConsultation :frm:datTabDetMedicalConsultation" />
+					</f:facet>
+					
+					<f:facet name="left">
+						<p:outputLabel value="Generar Consulta Médica" />
+					</f:facet>
+				</p:toolbar>
+				<p:panelGrid id="panGriMedicalConsultation" columns="4" style="width:100%">					
+					<p:outputLabel value="Fecha:" />
+					<p:calendar id="calFecFac"
+						value="#{medicalConsultationController.medicalConsultation.createAt}" />
+						
+					<p:outputLabel for="txtIdeCli" value="Dni Paciente:" />
+					<h:panelGroup>
+						<p:inputText id="txtIdeCli" maxlength="13" required="true"
+							value="#{medicalConsultationController.patient.dni}" />
+						<p:commandButton icon="ui-icon-search"
+							process="@this :frm:txtIdeCli"
+							actionListener="#{medicalConsultationController.findPatientByDni()}"
+							update=":frm:txtNomPac
+							:frm:txtApellPac 
+							:frm:txaNumHistoryPac
+							:frm:men" />
+					</h:panelGroup>
+
+					<p:outputLabel value="Nombres:" />
+					<p:inputText id="txtNomPac" readonly="true"
+						value="#{medicalConsultationController.patient.firstName}" />
+						
+					<p:outputLabel value="Apellidos:" />
+					<p:inputText id="txtApellPac" readonly="true"
+						value="#{medicalConsultationController.patient.lastName}" />
+						
+					<p:outputLabel value="Número de Historia Clínica:" />
+					<p:inputText id="txaNumHistoryPac" readonly="true"
+						value="#{medicalConsultationController.patient.numberClinicalHistory}" />
+				</p:panelGrid>
+				<br></br>
+
+				<p:toolbar>
+					<f:facet name="right">
+						<p:commandButton value="Añadir" icon="ui-icon-plus"
+							onclick="PF('diaAnaDetConsultation').show();" />
+
+					</f:facet>
+				</p:toolbar>
+
+				<p:dataTable id="datTabDetMedicalConsultation"
+					value="#{medicalConsultationController.detailConsultations}" var="detCon"
+					selectionMode="single" rowKey="#{detCon.id}">
+					<p:ajax event="rowSelect"
+						listener="#{medicalConsultationController.detailConsultationSel}" />
+					<p:column headerText="Diagnóstico">
+						<p:outputLabel value="#{detCon.diagnostic}" />
+					</p:column>
+					<p:column headerText="Tratamiento">
+						<p:outputLabel value="#{detCon.treatment}" />
+					</p:column>
+				</p:dataTable>
+				
+				<p:dialog widgetVar="diaAnaDetConsultation" showEffect="explode"
+					hideEffect="bounce" header="Añadir Detalle" width="450"
+					height="400">
+					<p:toolbar>
+						<f:facet name="right">
+							<p:commandButton value="Guardar"
+								process="@this :frm:panGriAnaDetConsultation"
+								actionListener="#{medicalConsultationController.addConsultationToDetail()}"
+								update=":frm:panGriAnaDetConsultation :frm:datTabDetMedicalConsultation :frm:men"
+								oncomplete="PF('diaAnaDetConsultation').hide();" />
+							<p:commandButton value="Cancelar" process="@this"
+								update=":frm:panGriAnaDetConsultation"
+								oncomplete="PF('diaAnaDetConsultation').hide();" />
+						</f:facet>
+					</p:toolbar>
+					<br />
+
+					<p:panelGrid id="panGriAnaDetConsultation" columns="2" style="width:100%">
+
+						<p:outputLabel value="Diagnóstico:" for="txaDiagnostic" />
+						<p:inputTextarea id="txaDiagnostic"
+							value="#{medicalConsultationController.detailConsultation.diagnostic}" />
+
+						<p:outputLabel value="Tratamiento:" for="txaTreatment" />
+						<p:inputTextarea id="txaTreatment"
+							value="#{medicalConsultationController.detailConsultation.treatment}" />
+					</p:panelGrid>
+				</p:dialog>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+
+</body>
+</html>

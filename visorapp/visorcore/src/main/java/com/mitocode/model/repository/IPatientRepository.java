@@ -3,6 +3,8 @@
  */
 package com.mitocode.model.repository;
 
+import java.util.Optional;
+
 import com.mitocode.model.entity.Patient;
 
 /**
@@ -11,4 +13,5 @@ import com.mitocode.model.entity.Patient;
  */
 public interface IPatientRepository extends JpaRepository<Patient>{
 
+	Optional<Patient> findByDni(String dni) throws Exception;
 }
