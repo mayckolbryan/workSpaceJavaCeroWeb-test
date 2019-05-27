@@ -10,5 +10,6 @@ import com.mitocode.model.entity.MedicalConsultation;
  *
  */
 public interface IMedicalConsultationService extends CrudService<MedicalConsultation>{
-
+	
+	MedicalConsultation findByFilters(MedicalConsultation t) throws Exception;
 }

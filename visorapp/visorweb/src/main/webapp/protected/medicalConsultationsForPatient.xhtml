@@ -12,31 +12,24 @@
 		<ui:define name="content">
 			<h:form id="frm">
 				<p:growl id="men" />
-				<p:toolbar>
-					<f:facet name="right">
-							
-						<p:commandButton value="Guardar" icon="ui-icon-disk"
-							process="@this :frm:panGriMedicalConsultationForPatient"
-							actionListener="#{medicalConsultationController.saveMedicalConsultationForPatient()}"
-							update=":frm:men :frm:panGriMedicalConsultationForPatient :frm:datTabDetMedicalConsultationForPatient" />
-					</f:facet>
-					
+				<p:toolbar>					
 					<f:facet name="left">
 						<p:outputLabel value="Mostrar Consulta Médica" />
 					</f:facet>
 				</p:toolbar>
+				
 				<p:panelGrid id="panGriMedicalConsultationForPatient" columns="4" style="width:100%">					
 					<p:outputLabel value="Fecha:" />
 					<p:calendar id="calFecFac"
-						value="#{medicalConsultationController.medicalConsultation.createAt}" />
+						value="#{medicalConsultationForPatientController.medicalConsultation.createAt}" />
 						
 					<p:outputLabel for="txtIdeCli" value="Dni Paciente:" />
 					<h:panelGroup>
 						<p:inputText id="txtIdeCli" maxlength="13" required="true"
-							value="#{medicalConsultationController.patient.dni}" />
+							value="#{medicalConsultationForPatientController.patient.dni}" />
 						<p:commandButton icon="ui-icon-search"
 							process="@this :frm:txtIdeCli"
-							actionListener="#{medicalConsultationController.findPatientByDni()}"
+							actionListener="#{medicalConsultationForPatientController.findPatientByDni()}"
 							update=":frm:txtNomPac
 							:frm:txtApellPac 
 							:frm:txaNumHistoryPac
@@ -45,23 +38,32 @@
 
 					<p:outputLabel value="Nombres:" />
 					<p:inputText id="txtNomPac" readonly="true"
-						value="#{medicalConsultationController.patient.firstName}" />
+						value="#{medicalConsultationForPatientController.patient.firstName}" />
 						
 					<p:outputLabel value="Apellidos:" />
 					<p:inputText id="txtApellPac" readonly="true"
-						value="#{medicalConsultationController.patient.lastName}" />
+						value="#{medicalConsultationForPatientController.patient.lastName}" />
 						
 					<p:outputLabel value="Número de Historia Clínica:" />
 					<p:inputText id="txaNumHistoryPac" readonly="true"
-						value="#{medicalConsultationController.patient.numberClinicalHistory}" />
+						value="#{medicalConsultationForPatientController.patient.numberClinicalHistory}" />
 				</p:panelGrid>
 				<br></br>
 
+				<p:toolbar>					
+					<f:facet name="right">							
+						<p:commandButton value="Buscar" icon="ui-icon-search"
+							process="@this :frm:panGriMedicalConsultationForPatient"
+							actionListener="#{medicalConsultationForPatientController.findMedicalConsultation()}"
+							update=":frm:men :frm:datTabDetMedicalConsultationForPatient" />
+					</f:facet>
+				</p:toolbar>
+				
 				<p:dataTable id="datTabDetMedicalConsultationForPatient"
-					value="#{medicalConsultationController.detailConsultations}" var="detCon"
+					value="#{medicalConsultationForPatientController.detailConsultations}" var="detCon"
 					selectionMode="single" rowKey="#{detCon.id}">
 					<p:ajax event="rowSelect"
-						listener="#{medicalConsultationController.detailConsultationSel}" />
+						listener="#{medicalConsultationForPatientController.detailConsultationSel}" />
 					<p:column headerText="Diagnóstico">
 						<p:outputLabel value="#{detCon.diagnostic}" />
 					</p:column>

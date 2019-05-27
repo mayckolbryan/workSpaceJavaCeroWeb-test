@@ -58,5 +58,10 @@ public class MedicalConsultationServiceImpl implements IMedicalConsultationServi
 	public MedicalConsultation findById(MedicalConsultation t) throws Exception {
 		return medicalConsultationRepository.findById(t);
 	}
+
+	@Override
+	public MedicalConsultation findByFilters(MedicalConsultation t) throws Exception {
+		return medicalConsultationRepository.findByFilters(t);
+	}
 	
 }
