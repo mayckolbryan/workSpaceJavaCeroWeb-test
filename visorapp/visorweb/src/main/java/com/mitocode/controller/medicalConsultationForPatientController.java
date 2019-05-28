@@ -49,7 +49,7 @@ public class medicalConsultationForPatientController implements Serializable{
 	private List<MedicalConsultation> medicalConsultations;
 
 	private DetailConsultation detailConsultation;
-	private DetailConsultation detailConsultationSel;
+//	private DetailConsultation detailConsultationSel;
 	private List<DetailConsultation> detailConsultations;
 
 	private Patient patient;
@@ -61,7 +61,6 @@ public class medicalConsultationForPatientController implements Serializable{
 		medicalConsultations = new ArrayList<>();
 
 		detailConsultation = new DetailConsultation();
-		detailConsultationSel = new DetailConsultation();
 		detailConsultations = new ArrayList<>();
 
 		patient = new Patient();
@@ -83,15 +82,11 @@ public class medicalConsultationForPatientController implements Serializable{
 		}
 	}
 
-//	public void addConsultationToDetail() {
-//		detailConsultations.add(detailConsultation);
-//		
-//		cleanDetailConsultation();
-//	}
-
 	public void findMedicalConsultation() {
 		try {
 			if (patient != null) {
+
+				cleanDetailConsultation();
 				//TODO Reemplazar Doctor por el de la sesion.
 				Doctor doctor = new Doctor();
 				doctor.setId(1);
@@ -99,12 +94,10 @@ public class medicalConsultationForPatientController implements Serializable{
 				//-----------------------------------------------
 				medicalConsultation.setDoctor(doctor);
 				medicalConsultation.setPatient(patient);
-//				medicalConsultation.setItems(detailConsultations);
 
-				detailConsultations = medicalConsultationService.findByFilters(medicalConsultation).getItems();
+				detailConsultations = new ArrayList<DetailConsultation>(medicalConsultationService.findByFilters(medicalConsultation).getItems());
 
 				resetForm();
-				cleanDetailConsultation();
 
 				Message.messageInfo("Búsqueda de Consulta Médica");
 			} else {
@@ -123,8 +116,8 @@ public class medicalConsultationForPatientController implements Serializable{
 	public void resetForm() {
 		this.medicalConsultation = new MedicalConsultation();
 		this.medicalConsultationSel = null;
-		this.detailConsultations.clear();
-		this.patient = new Patient();
+//		this.detailConsultations.clear();
+//		this.patient = new Patient();
 	}
 
 	public void selectMedicalConsultation(SelectEvent ev) {
@@ -165,14 +158,6 @@ public class medicalConsultationForPatientController implements Serializable{
 
 	public void setDetailConsultation(DetailConsultation detailConsultation) {
 		this.detailConsultation = detailConsultation;
-	}
-
-	public DetailConsultation getDetailConsultationSel() {
-		return detailConsultationSel;
-	}
-
-	public void setDetailConsultationSel(DetailConsultation detailConsultationSel) {
-		this.detailConsultationSel = detailConsultationSel;
 	}
 
 	public List<DetailConsultation> getDetailConsultations() {

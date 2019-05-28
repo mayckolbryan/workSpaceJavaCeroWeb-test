@@ -61,9 +61,7 @@
 				
 				<p:dataTable id="datTabDetMedicalConsultationForPatient"
 					value="#{medicalConsultationForPatientController.detailConsultations}" var="detCon"
-					selectionMode="single" rowKey="#{detCon.id}">
-					<p:ajax event="rowSelect"
-						listener="#{medicalConsultationForPatientController.detailConsultationSel}" />
+					rowKey="#{detCon.id}">
 					<p:column headerText="Diagnóstico">
 						<p:outputLabel value="#{detCon.diagnostic}" />
 					</p:column>

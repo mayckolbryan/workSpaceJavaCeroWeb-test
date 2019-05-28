@@ -55,7 +55,9 @@ public class MedicalConsultationRepositoryImpl implements IMedicalConsultationRe
 	public MedicalConsultation findByFilters(MedicalConsultation t) throws Exception {
 		MedicalConsultation medicalConsultation = new MedicalConsultation();
 		
-		TypedQuery<MedicalConsultation> query = em.createQuery("SELECT m FROM MedicalConsultation m WHERE m.createAt = ?1 AND m.patient.id = ?2 AND m.doctor.id = ?3", MedicalConsultation.class);
+		TypedQuery<MedicalConsultation> query = em.createQuery("SELECT m FROM MedicalConsultation m JOIN FETCH m.items "
+				+ "WHERE m.createAt = ?1 AND m.patient.id = ?2 AND m.doctor.id = ?3", 
+				MedicalConsultation.class);
 		query.setParameter(1, t.getCreateAt());
 		query.setParameter(2, t.getPatient().getId());
 		query.setParameter(3, t.getDoctor().getId());
