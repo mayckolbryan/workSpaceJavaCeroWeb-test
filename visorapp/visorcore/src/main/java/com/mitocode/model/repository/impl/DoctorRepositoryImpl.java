@@ -6,12 +6,16 @@ package com.mitocode.model.repository.impl;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
+import com.mitocode.dto.ReportDoctorSpecialty;
 import com.mitocode.model.entity.Doctor;
 import com.mitocode.model.repository.IDoctorRepository;
 
@@ -63,6 +67,42 @@ public class DoctorRepositoryImpl implements IDoctorRepository, Serializable{
 		doctors = query.getResultList();
 
 		return doctors != null && !doctors.isEmpty() ? doctors.get(0) : new Doctor();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<ReportDoctorSpecialty> reportDoctorsForSpecialties() {
+		List<ReportDoctorSpecialty> reportDoctorSpecialties = new ArrayList<>();
+		try {
+			Query query = em.createNativeQuery("SELECT * FROM fn_QuantityDoctorBySpecialty()");
+			// query.setParameter(1, per.getIdPersona());
+			//IdSpecialty / nameSpecialty / cantidadDoctors
+		
+			List<Object[]> data = query.getResultList();
+			
+			/*0) [1, Category 1]
+			  1) [2, Category 2]
+			  */
+
+			data.forEach(x -> {
+				int idSpecialty = Integer.parseInt(String.valueOf(x[0]));
+				String specialty = String.valueOf(x[1]);
+				int quantity = Integer.parseInt(String.valueOf(x[2]));
+				List<String> doctors = new ArrayList<>();
+
+				Query queryDoctors = em.createNativeQuery("SELECT * FROM fn_ListDoctorsBySpecialty(?1)");
+				queryDoctors.setParameter(1, idSpecialty);
+				List<Object[]> dataDoctors = query.getResultList();
+				doctors = dataDoctors.stream().map(doctorObject -> Objects.toString(doctorObject, null))
+											  .collect(Collectors.toList());
+						
+				reportDoctorSpecialties.add(new ReportDoctorSpecialty(specialty, quantity, doctors));
+			});
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return reportDoctorSpecialties;
 	}
 
 }

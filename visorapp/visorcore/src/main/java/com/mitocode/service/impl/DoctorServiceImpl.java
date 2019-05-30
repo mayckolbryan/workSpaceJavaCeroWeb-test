@@ -10,6 +10,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.transaction.Transactional;
 
+import com.mitocode.dto.ReportDoctorSpecialty;
 import com.mitocode.model.entity.Doctor;
 import com.mitocode.model.repository.IDoctorRepository;
 import com.mitocode.service.IDoctorService;
@@ -52,6 +53,11 @@ public class DoctorServiceImpl implements IDoctorService, Serializable{
 	@Override
 	public Doctor findById(Doctor t) throws Exception {
 		return doctorRepository.findById(t);
+	}
+
+	@Override
+	public List<ReportDoctorSpecialty> reportDoctorsForSpecialties() {
+		return doctorRepository.reportDoctorsForSpecialties();
 	}
 
 }

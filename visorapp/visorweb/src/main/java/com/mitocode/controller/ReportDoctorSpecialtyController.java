@@ -14,57 +14,50 @@ import javax.inject.Named;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
-import org.primefaces.model.chart.Axis;
-import org.primefaces.model.chart.AxisType;
-import org.primefaces.model.chart.LineChartModel;
-import org.primefaces.model.chart.LineChartSeries;
 import org.primefaces.model.chart.PieChartModel;
 
-//import com.hampcode.dto.ReportProductCategory;
-//import com.hampcode.service.IProductService;
+import com.mitocode.dto.ReportDoctorSpecialty;
+import com.mitocode.service.IDoctorService;
 
-
-import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperRunManager;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 @Named
 @ViewScoped
-public class ReportController implements Serializable {
+public class ReportDoctorSpecialtyController implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-//	@Inject
-//	private IProductService productService;
-//
-//	private List<ReportProductCategory> reportProductCategorys;
+	@Inject
+	private IDoctorService doctorService;
+
+	private List<ReportDoctorSpecialty> reportDoctorSpecialties;
 	private PieChartModel pieModel1;
 	
 
 	@PostConstruct
 	public void init() {
-		this.listarProductCategories();
+		this.listarDoctorSpecialty();
 		this.createPieModel1();
 	}
 
 	private void createPieModel1() {
 		pieModel1 = new PieChartModel();
 
-//		for (ReportProductCategory x : this.reportProductCategorys) {
-//			pieModel1.set(x.getCategory(), x.getQuantity());
-//		}
+		for (ReportDoctorSpecialty x : this.reportDoctorSpecialties) {
+			pieModel1.set(x.getSpecialty(), x.getQuantity());
+		}
 
-		pieModel1.setTitle("Cantidad Productos Por Categoria");
+		pieModel1.setTitle("Cantidad de Doctores Por Especialidad");
 		pieModel1.setLegendPosition("w");
 		pieModel1.setShowDataLabels(true);
 	}
 
 	
-	public void listarProductCategories() {
+	public void listarDoctorSpecialty() {
 		try {
-//			reportProductCategorys = productService.reportQuantityProductByCategory();
+			reportDoctorSpecialties = doctorService.reportDoctorsForSpecialties();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -78,8 +71,8 @@ public class ReportController implements Serializable {
 			// parametros.put("", "");
 			File jasper = new File(FacesContext.getCurrentInstance().getExternalContext()
 					.getRealPath("/resources/reports/report_product_category.jasper"));
-//			JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros,
-//					new JRBeanCollectionDataSource(this.reportProductCategorys));
+			JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros,
+					new JRBeanCollectionDataSource(this.reportDoctorSpecialties));
 
 			HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext()
 					.getResponse();
