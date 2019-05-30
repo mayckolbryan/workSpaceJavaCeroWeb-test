@@ -25,7 +25,7 @@ import com.mitocode.util.Message;
  */
 @Named
 @ViewScoped
-public class doctorController implements Serializable{
+public class DoctorController implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	

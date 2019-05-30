@@ -31,7 +31,7 @@ import com.mitocode.util.Message;
  */
 @Named
 @ViewScoped
-public class medicalConsultationForPatientController implements Serializable{
+public class MedicalConsultationForPatientController implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
