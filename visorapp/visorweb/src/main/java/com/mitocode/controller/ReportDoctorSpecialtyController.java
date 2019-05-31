@@ -70,7 +70,7 @@ public class ReportDoctorSpecialtyController implements Serializable {
 			Map<String, Object> parametros = new HashMap<String, Object>();
 			// parametros.put("", "");
 			File jasper = new File(FacesContext.getCurrentInstance().getExternalContext()
-					.getRealPath("/resources/reports/report_product_category.jasper"));
+					.getRealPath("/resources/reports/report_doctor_specialty.jasper"));
 			JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros,
 					new JRBeanCollectionDataSource(this.reportDoctorSpecialties));
 
