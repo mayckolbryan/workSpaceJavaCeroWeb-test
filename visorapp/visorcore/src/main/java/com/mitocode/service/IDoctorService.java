@@ -15,4 +15,6 @@ import com.mitocode.model.entity.Doctor;
 public interface IDoctorService extends CrudService<Doctor>{
 
 	public List<ReportDoctorSpecialty> reportDoctorsForSpecialties();
+	
+	public Doctor findByDni(Doctor t) throws Exception;
 }

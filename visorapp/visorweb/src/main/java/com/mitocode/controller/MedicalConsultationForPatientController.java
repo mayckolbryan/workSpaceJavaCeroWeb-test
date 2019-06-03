@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.annotation.PostConstruct;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -20,6 +21,7 @@ import com.mitocode.model.entity.DetailConsultation;
 import com.mitocode.model.entity.Doctor;
 import com.mitocode.model.entity.MedicalConsultation;
 import com.mitocode.model.entity.Patient;
+import com.mitocode.model.entity.User;
 import com.mitocode.service.IDoctorService;
 import com.mitocode.service.IMedicalConsultationService;
 import com.mitocode.service.IPatientService;
@@ -86,13 +88,15 @@ public class MedicalConsultationForPatientController implements Serializable{
 		try {
 			if (patient != null) {
 
+				User user = new User();
 				cleanDetailConsultation();
 				//TODO Reemplazar Doctor por el de la sesion.
-				Doctor doctor = new Doctor();
-				doctor.setId(1);
-				doctor = doctorService.findById(doctor);
+//				Doctor doctor = new Doctor();
+//				doctor.setId(1);
+//				doctor = doctorService.findById(doctor);
+				user = ((Optional<User>)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user")).get();
 				//-----------------------------------------------
-				medicalConsultation.setDoctor(doctor);
+				medicalConsultation.setDoctor(user.getDoctor());
 				medicalConsultation.setPatient(patient);
 
 				detailConsultations = new ArrayList<DetailConsultation>(medicalConsultationService.findByFilters(medicalConsultation).getItems());

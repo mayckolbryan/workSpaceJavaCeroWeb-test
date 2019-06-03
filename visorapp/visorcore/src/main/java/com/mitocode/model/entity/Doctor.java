@@ -16,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -50,6 +51,9 @@ public class Doctor implements Serializable{
 	
 	@OneToMany(mappedBy = "doctor", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<MedicalConsultation> medicalConsultation;
+	
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "doctor")
+	private User user;
 
 	public Integer getId() {
 		return id;
@@ -98,4 +102,21 @@ public class Doctor implements Serializable{
 	public void setSpecialty(Specialty specialty) {
 		this.specialty = specialty;
 	}
+
+	public List<MedicalConsultation> getMedicalConsultation() {
+		return medicalConsultation;
+	}
+
+	public void setMedicalConsultation(List<MedicalConsultation> medicalConsultation) {
+		this.medicalConsultation = medicalConsultation;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+	
 }

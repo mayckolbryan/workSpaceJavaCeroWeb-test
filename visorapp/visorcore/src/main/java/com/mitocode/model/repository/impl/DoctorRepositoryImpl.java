@@ -6,8 +6,6 @@ package com.mitocode.model.repository.impl;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 import javax.inject.Named;
 import javax.persistence.EntityManager;
@@ -53,7 +51,7 @@ public class DoctorRepositoryImpl implements IDoctorRepository, Serializable{
 	public List<Doctor> findAll() throws Exception {
 		List<Doctor> doctors = new ArrayList<>();
 		
-		TypedQuery<Doctor> query = em.createQuery("SELECT d FROM Doctor d", Doctor.class);
+		TypedQuery<Doctor> query = em.createQuery("SELECT d FROM Doctor d WHERE d.id != 1", Doctor.class);
 		doctors = query.getResultList();
 		return doctors;
 	}
@@ -63,6 +61,17 @@ public class DoctorRepositoryImpl implements IDoctorRepository, Serializable{
 		List<Doctor> doctors = new ArrayList<>();
 		TypedQuery<Doctor> query = em.createQuery("SELECT d FROM Doctor d WHERE d.id = ?1", Doctor.class);
 		query.setParameter(1, t.getId());
+
+		doctors = query.getResultList();
+
+		return doctors != null && !doctors.isEmpty() ? doctors.get(0) : new Doctor();
+	}
+
+	@Override
+	public Doctor findByDni(Doctor t) throws Exception {
+		List<Doctor> doctors = new ArrayList<>();
+		TypedQuery<Doctor> query = em.createQuery("SELECT d FROM Doctor d WHERE d.dni = ?1", Doctor.class);
+		query.setParameter(1, t.getDni());
 
 		doctors = query.getResultList();
 
@@ -85,16 +94,22 @@ public class DoctorRepositoryImpl implements IDoctorRepository, Serializable{
 			  */
 
 			data.forEach(x -> {
-				int idSpecialty = Integer.parseInt(String.valueOf(x[0]));
-				String specialty = String.valueOf(x[1]);
-				int quantity = Integer.parseInt(String.valueOf(x[2]));
-				List<String> doctors = new ArrayList<>();
-
-				Query queryDoctors = em.createNativeQuery("SELECT * FROM fn_ListDoctorsBySpecialty(?1)");
-				queryDoctors.setParameter(1, idSpecialty);
-				List<Object[]> dataDoctors = query.getResultList();
-				doctors = dataDoctors.stream().map(doctorObject -> Objects.toString(doctorObject, null))
-											  .collect(Collectors.toList());
+				String specialty = String.valueOf(x[0]);
+				int quantity = Integer.parseInt(String.valueOf(x[1]));
+				String doctors = String.valueOf(x[2]);
+//				ArrayList<String> doctors = new ArrayList<>();
+				
+//				Query queryDoctors = em.createNativeQuery("SELECT * FROM fn_ListDoctorsBySpecialty(?1)");
+//				queryDoctors.setParameter(1, idSpecialty);
+//				List<Object[]> dataDoctors = query.getResultList();
+//				doctors = (ArrayList<String>) dataDoctors.stream().map(doctorObject -> Objects.toString(doctorObject, null))
+//											  .collect(Collectors.toList());
+				
+//				for (Object[] doctorObject : dataDoctors) {
+//					DoctorDto doctorDto = new DoctorDto();
+//					doctorDto.setFullName(Objects.toString(doctorObject, null));
+//					doctors.add(doctorDto);
+//				}
 						
 				reportDoctorSpecialties.add(new ReportDoctorSpecialty(specialty, quantity, doctors));
 			});

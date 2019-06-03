@@ -50,7 +50,7 @@ public class SpecialtyRepositoryImpl implements ISpecialtyRepository, Serializab
 	public List<Specialty> findAll() throws Exception {
 		List<Specialty> specialties = new ArrayList<>();
 
-		TypedQuery<Specialty> query = em.createQuery("SELECT c FROM Specialty c", Specialty.class);
+		TypedQuery<Specialty> query = em.createQuery("SELECT c FROM Specialty c WHERE c.id != 1", Specialty.class);
 		specialties = query.getResultList();
 		return specialties;
 	}
@@ -58,7 +58,7 @@ public class SpecialtyRepositoryImpl implements ISpecialtyRepository, Serializab
 	@Override
 	public Specialty findById(Specialty t) throws Exception {
 		List<Specialty> specialties = new ArrayList<>();
-		TypedQuery<Specialty> query = em.createQuery("SELECT c FROM Specialty c WHERE c.id = ?1", Specialty.class);
+		TypedQuery<Specialty> query = em.createQuery("SELECT c FROM Specialty c WHERE c.id != 1 && c.id = ?1", Specialty.class);
 		query.setParameter(1, t.getId());
 
 		specialties = query.getResultList();

@@ -19,6 +19,7 @@ import org.primefaces.model.chart.PieChartModel;
 import com.mitocode.dto.ReportDoctorSpecialty;
 import com.mitocode.service.IDoctorService;
 
+import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
@@ -76,10 +77,10 @@ public class ReportDoctorSpecialtyController implements Serializable {
 
 			HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext()
 					.getResponse();
-			response.addHeader("Content-disposition", "attachment; filename=productcategorys.pdf");
+			response.addHeader("Content-disposition", "attachment; filename=doctorsSpecialties.pdf");
 			ServletOutputStream stream = response.getOutputStream();
 
-//			JasperExportManager.exportReportToPdfStream(jasperPrint, stream);
+			JasperExportManager.exportReportToPdfStream(jasperPrint, stream);
 
 			stream.flush();
 			stream.close();

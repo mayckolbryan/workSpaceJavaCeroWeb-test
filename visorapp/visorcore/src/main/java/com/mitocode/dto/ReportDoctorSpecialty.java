@@ -1,6 +1,7 @@
 package com.mitocode.dto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ReportDoctorSpecialty implements Serializable{
@@ -9,13 +10,13 @@ public class ReportDoctorSpecialty implements Serializable{
 	
 	private String specialty;
 	private int quantity;
-	private List<String> doctors;
+	private String doctors;
 	
 	public ReportDoctorSpecialty() {
 		super();
 	}
 	
-	public ReportDoctorSpecialty(String specialty, int quantity, List<String> doctors) {
+	public ReportDoctorSpecialty(String specialty, int quantity, String doctors) {
 		super();
 		this.specialty = specialty;
 		this.quantity = quantity;
@@ -34,10 +35,10 @@ public class ReportDoctorSpecialty implements Serializable{
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
-	public List<String> getDoctors() {
+	public String getDoctors() {
 		return doctors;
 	}
-	public void setDoctors(List<String> doctors) {
+	public void setDoctors(String doctors) {
 		this.doctors = doctors;
 	}
 }

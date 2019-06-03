@@ -4,6 +4,7 @@
 package com.mitocode.controller;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -11,11 +12,15 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.mindrot.jbcrypt.BCrypt;
 import org.primefaces.event.SelectEvent;
 
 import com.mitocode.model.entity.Doctor;
+import com.mitocode.model.entity.Rol;
 import com.mitocode.model.entity.Specialty;
+import com.mitocode.model.entity.User;
 import com.mitocode.service.IDoctorService;
+import com.mitocode.service.IRolService;
 import com.mitocode.service.ISpecialtyService;
 import com.mitocode.util.Message;
 
@@ -42,9 +47,14 @@ public class DoctorController implements Serializable{
 	private Specialty specialty;
 	private List<Specialty> specialties;
 
+	@Inject
+	private IRolService rolService;
+	private User user;
+
 	@PostConstruct
 	public void init() {
 		doctor = new Doctor();
+		user = new User();
 		doctorSelec = new Doctor();
 		loadDoctors();
 		loadSpecialties();
@@ -70,13 +80,55 @@ public class DoctorController implements Serializable{
 		try {
 			if (doctor.getId() != null) {
 				doctor.setSpecialty(specialty);
-				doctorService.update(doctor);
+//				doctorService.update(doctor);
+				
+				/*--------------------------------------------------------------*/
+				String password = this.user.getPassword();
+				String passwordHashed = BCrypt.hashpw(password, BCrypt.gensalt());
+
+				//User
+				this.user.setPassword(passwordHashed);
+				this.user.setState("A");
+
+				//User<---> Doctor					
+				this.doctor.setUser(this.user);
+				this.user.setDoctor(this.doctor);
+				
+				this.doctorService.update(this.doctor);
+				
 				Message.messageInfo("Registro actualizado exitosamente");
 			} else {
 				doctor.setSpecialty(specialty);
-				doctorService.insert(doctor);
-				Message.messageInfo("Registro guardado exitosamente");
+//				doctorService.insert(doctor);
+//				Message.messageInfo("Registro guardado exitosamente");
+				
+				/*--------------------------------------------------------------*/
+				String password = this.user.getPassword();
+				String passwordHashed = BCrypt.hashpw(password, BCrypt.gensalt());
 
+				//User
+				this.user.setPassword(passwordHashed);
+				this.user.setState("A");
+
+				//User<---> Doctor					
+				this.doctor.setUser(this.user);
+				this.user.setDoctor(this.doctor);
+				
+				this.doctorService.insert(this.doctor);
+				
+	
+				//Roles
+				List<Rol> roles = new ArrayList<Rol>();
+				int rolId = 2;
+				Rol rol = new Rol();
+				rol.setId(rolId);
+	
+				roles.add(rol);
+	
+				//Roles-->User
+				rolService.assignRolesToUser(this.user, roles);
+				
+				Message.messageInfo("Registro guardado exitosamente");
 			}
 			loadDoctors();
 			clearForm();
@@ -106,6 +158,7 @@ public class DoctorController implements Serializable{
 	public void clearForm() {
 		this.doctor = new Doctor();
 		this.doctorSelec = null;
+		this.user = new User();
 	}
 
 	public Doctor getDoctor() {
@@ -146,6 +199,14 @@ public class DoctorController implements Serializable{
 
 	public void setSpecialties(List<Specialty> specialties) {
 		this.specialties = specialties;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 	
 }

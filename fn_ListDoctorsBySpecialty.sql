@@ -1,6 +1,6 @@
-DROP FUNCTION fn_QuantityProductByCategory();
+DROP FUNCTION fn_ListDoctorsBySpecialty();
 
-CREATE OR REPLACE FUNCTION fn_QuantityProductByCategory(idSpecialty INT) 
+CREATE OR REPLACE FUNCTION fn_ListDoctorsBySpecialty(idSpecialty INT) 
  RETURNS TABLE (
  doctor TEXT
 ) 
@@ -20,4 +20,4 @@ FOR var_r IN(
 END; $$ 
 LANGUAGE 'plpgsql';
 
-SELECT * FROM fn_QuantityProductByCategory(1);
+SELECT * FROM fn_ListDoctorsBySpecialty(1);

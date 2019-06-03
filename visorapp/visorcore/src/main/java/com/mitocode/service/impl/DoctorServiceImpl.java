@@ -56,6 +56,11 @@ public class DoctorServiceImpl implements IDoctorService, Serializable{
 	}
 
 	@Override
+	public Doctor findByDni(Doctor t) throws Exception{
+		return doctorRepository.findByDni(t);
+	}
+
+	@Override
 	public List<ReportDoctorSpecialty> reportDoctorsForSpecialties() {
 		return doctorRepository.reportDoctorsForSpecialties();
 	}

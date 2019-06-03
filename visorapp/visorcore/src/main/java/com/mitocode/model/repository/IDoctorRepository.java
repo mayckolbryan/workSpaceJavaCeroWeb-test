@@ -8,4 +8,6 @@ import com.mitocode.model.entity.Doctor;
 public interface IDoctorRepository extends JpaRepository<Doctor>{
 	
 	public List<ReportDoctorSpecialty> reportDoctorsForSpecialties();
+	
+	public Doctor findByDni(Doctor t) throws Exception;
 }
