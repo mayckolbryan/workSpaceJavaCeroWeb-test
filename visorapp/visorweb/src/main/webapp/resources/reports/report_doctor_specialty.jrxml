@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report_doctor_specialty" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="06ff8b85-0bb3-46b5-b7ef-a31e855fbe4b">
+	<property name="ireport.zoom" value="3.4522712143931042"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="196"/>
+	<field name="specialty" class="java.lang.String"/>
+	<field name="quantity" class="java.lang.Integer"/>
+	<field name="doctors" class="java.lang.String"/>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="78">
+			<frame>
+				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#006699" uuid="b59cd8b5-4b17-44a5-a8ae-c8b4de1f9726"/>
+				<staticText>
+					<reportElement x="67" y="20" width="456" height="43" forecolor="#FFFFFF" uuid="5bdfdce2-c920-4dd3-a8db-ae65463bd129"/>
+					<textElement>
+						<font size="34" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Doctores por Especialidad]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="13"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="21">
+			<line>
+				<reportElement x="-20" y="20" width="595" height="1" forecolor="#666666" uuid="46a9ce93-10ef-4233-b453-0c0bdeafad62"/>
+			</line>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="555" height="20" forecolor="#0066CC" backcolor="#CEE6FF" uuid="e6cd3a7e-2528-4bac-ac96-51574a6580d8"/>
+				<textElement textAlignment="Left">
+					<font size="14" isBold="false"/>
+					<paragraph leftIndent="20"/>
+				</textElement>
+				<text><![CDATA[Proyecto Hospital]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="114">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="19" width="555" height="1" uuid="62598c53-059a-4de2-b68e-9ef59c2f6beb"/>
+			</line>
+			<textField>
+				<reportElement mode="Transparent" x="99" y="0" width="100" height="20" forecolor="#000000" uuid="8df9bf55-d89a-456d-b505-bf689c1e95f2"/>
+				<textElement>
+					<font isBold="false" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{specialty}]]></textFieldExpression>
+			</textField>
+			<frame>
+				<reportElement x="0" y="19" width="555" height="95" uuid="28c37a75-55c3-4855-9153-5d43cad1c7c5"/>
+				<staticText>
+					<reportElement x="30" y="17" width="70" height="20" forecolor="#3366FF" uuid="0c2cae45-76cc-4e9d-9d9b-4114df63df04"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Doctores:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="100" y="17" width="356" height="41" uuid="6195a828-4f28-4e8a-bd2b-fe63fefbaaa5"/>
+					<textFieldExpression><![CDATA[$F{doctors}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<staticText>
+				<reportElement mode="Transparent" x="29" y="0" width="71" height="20" forecolor="#3366FF" uuid="41be8374-478a-49aa-bc06-885e240b923e"/>
+				<textElement>
+					<font isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Especialidad:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="375" y="0" width="100" height="20" uuid="fdf2cad4-b7f3-492a-a2e4-78b1189c365b"/>
+				<textFieldExpression><![CDATA[$F{quantity}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="296" y="0" width="79" height="20" forecolor="#3366FF" uuid="d6770f63-a3e0-4a01-834d-ee01aa5d97cd"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° de Doctores:]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="17">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6" uuid="b6bbe5d4-f71b-4dd8-af50-1b740cb61bd2"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="d006cbdb-44f1-4a2a-a9ea-e2276b486f7d"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="0" y="4" width="100" height="13" uuid="3a7afe10-024f-4a71-9824-8a14d84d5d4d"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>
